@@ -3,7 +3,7 @@
   hello Vue {{querySerch.name}}
   </br>
   <input type="text" v-model="querySerch.name"/>
-  <button @click="login()">点击</button>
+  <button @click="login()"><i class="fa-icon-pencil"></i>点击</button>
   {{dateTime | sexName}}
   <fa-table :data='list' height='400' :header-cell-style="{background:'#f7f8fa'}">
       <fa-table-column prop='modelName' label='业务模型名称'></fa-table-column>

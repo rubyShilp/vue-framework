@@ -1,8 +1,8 @@
 let webpack = require('webpack');
 let path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
-let ExtractTextPlugin = require("extract-text-webpack-plugin");
 let HtmlWebpackPlugin = require('html-webpack-plugin');
+let ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports={
     entry:{
         'main': ['babel-polyfill','./scripts/main.js','./scripts/polyfill.js']
@@ -17,7 +17,9 @@ module.exports={
             'vue':path.resolve(process.cwd(), './node_modules/vue/dist/vue.min.js'),
             'vue-router':path.resolve(process.cwd(), './node_modules/vue-router/dist/vue-router.min.js'),
             'vuex':path.resolve(process.cwd(), './node_modules/vuex/dist/vuex.min.js'),
-            'md5':path.resolve(process.cwd(), './node_modules/md5/md5.js')
+            'md5':path.resolve(process.cwd(), './node_modules/md5/md5.js'),
+            'html2canvas':path.resolve(process.cwd(), './node_modules/html2canvas/dist/html2canvas.js'),
+            '@':path.resolve(process.cwd(), 'app/scripts')
         },
         extensions: ['.vue','.js','.css']
     },
@@ -37,10 +39,6 @@ module.exports={
                 use: 'html-loader'
             },
             {
-                test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|swf)$/,
-                use: 'url-loader?limit=10000&name=images/[name].[ext]?[hash]'
-            },
-                        {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|swf)$/,
                 use: 'url-loader?limit=10000&name=images/[name].[ext]?[hash]'
             },
@@ -80,14 +78,8 @@ module.exports={
     optimization:{
         splitChunks:{
             chunks: "all", 
-            cacheGroups:{
-                vendor:{
-                    chunks:'all',
-                    test:"/node_modules\/(.*)\.js/",
-                    name:'vendor'
-                }
-            }
-        }
+        },
+        runtimeChunk:true
     },
     plugins:[
         new VueLoaderPlugin(),
