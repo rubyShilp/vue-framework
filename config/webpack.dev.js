@@ -30,8 +30,8 @@ module.exports=webpackMerge(commonConfig,{
         //代理访问后台地址
         proxy:[
             {
-                context:['/user'],
-                target:'http://172.17.177.60:8084/',
+                context:['/user','/evidence'],
+                target:'http://172.17.177.60:8070/',
                 changeOrigin:true,
                 secure:false
             }

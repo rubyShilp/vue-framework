@@ -1,11 +1,14 @@
 import axios from 'axios';
-import {token,sessionOut} from './../util/core.js';
-
-axios.defaults.headers = { 'Content-Type': 'application/json' || 'multipart/form-data','X-Frame-Options':'SAMEORIGIN'};
-axios.defaults.baseURL = '/api/';
+import {token,sessionOut,isJson, urlParams} from './../util/core.js';
+axios.defaults.headers = { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' || 'multipart/form-data','X-Frame-Options':'SAMEORIGIN'};
+axios.defaults.baseURL = '/user/';
 //请求拦截器
 axios.interceptors.request.use(
     (config)=>{
+        //根据所传参数的不同判断是否序列化参数
+        if (isJson(config.data)) {
+            config.data = urlParams(config.data);
+        }
         if(token()){
             config.headers.token=token();
         }

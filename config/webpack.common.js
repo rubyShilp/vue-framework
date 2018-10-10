@@ -1,7 +1,7 @@
 let webpack = require('webpack');
 let path = require('path');
-const { VueLoaderPlugin } = require('vue-loader')
-const MiniCssExtractPlugin=require('mini-css-extract-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
+let ExtractTextPlugin = require("extract-text-webpack-plugin");
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports={
     entry:{
@@ -46,15 +46,32 @@ module.exports={
             },
             {
                 test: /\.less$/,
-                use:['style-loader','css-loader','less-loader']
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        {
+                            loader:'css-loader',
+                            options:{
+                                minimize: true //css压缩
+                            }
+                        },'less-loader'],
+                    allChunks: true
+                })
             },
             {
                 test: /\.css$/,
-                use:[
-                        MiniCssExtractPlugin.loader,
-                        "css-loader"
+                use:ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: [
+                    {
+                        loader: 'css-loader',
+                        options:{
+                            minimize: true //css压缩
+                        }
+                    }
                     ]
-            }
+                })
+            },
         ]
     },
     performance: {
@@ -76,18 +93,25 @@ module.exports={
         new VueLoaderPlugin(),
         new webpack.ProgressPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new MiniCssExtractPlugin({
-            filename: "[name].bundle[hash:7].css",
-            chunkFilename: "[name].bundle[hash:7].css"
-        }),
+        new ExtractTextPlugin('[name].bundle[hash:7].css'),
         new HtmlWebpackPlugin({ 
             template: './index.html',
             favicon: './favicon.ico',
             filename:'index.html',
             hash:true,//防止缓存
             minify:{
-                removeAttributeQuotes:true//压缩 去掉引号
-            }
+                removeComments: true,
+                collapseWhitespace: true,
+                removeRedundantAttributes: true,
+                useShortDoctype: true,
+                removeEmptyAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                keepClosingSlash: true,
+                minifyJS: true,
+                minifyCSS: true,
+                minifyURLs: true,
+            },
+            chunksSortMode:'dependency'
         })
     ]
 }

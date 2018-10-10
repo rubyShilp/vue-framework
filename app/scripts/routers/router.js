@@ -1,37 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import axios from 'axios';
 import login from './../components/login/login.vue';
 import {token,sessionOut} from './../util/core';
 Vue.use(VueRouter);
 Vue.config.productionTip = false;
-//请求拦截器
-axios.interceptors.request.use(
-    (config)=>{
-        if(token()){
-            config.headers.token=token();
-        }
-        return config;
-    },
-    (err)=>{
-        return Promise.reject(err);
-    }
-)
-//请求响应拦截器
-axios.interceptors.response.use(
-    (response)=>{ 
-        if(response.data.position==='sessionOut'){
-            sessionStorage.removeItem('TOKEN');
-            sessionOut();
-            return;
-        }else if(response.status===200){
-            return response;
-        }
-    },
-    (error)=>{
-        return Promise.reject(error);
-    }
-)
 //路由页面切换的时候，保持页面在滚动顶部显示
 const scrollBehavior=(to,from,savedPosition)=>{
     if(savedPosition){

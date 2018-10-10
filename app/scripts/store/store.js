@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import modules from './../components/modules'
+import mainModule from './../modules/mainModule.js'
 Vue.use(Vuex);
 const state={
     
 };
 const store = new Vuex.Store({
   state:state,
-  modules: modules
+  modules: mainModule
 })
 export default store
 

@@ -1,5 +1,15 @@
 import md5 from 'md5';
+import qs from 'qs';
 import router from './../routers/router';
+//判断对象是否为json格式
+export function isJson(obj){
+    var isjson = typeof(obj) == "object" && Object.prototype.toString.call(obj).toLowerCase() == "[object object]" && !obj.length;  
+    return isjson;
+}
+//参数序列化
+export function urlParams(params){
+    return qs.stringify(params);
+}
 //提示信息
 export function tripBox(options){
     var defaults = {
@@ -96,4 +106,18 @@ export function formDate(date,format){
 //获取token值
 export function token(){
     return sessionStorage.getItem('TOKEN');
+}
+//下载文件
+export function dowandFile(res,fileName){
+    var blob = new Blob([res]);
+    if('download' in document.createElement('a')){
+        var a = window.document.createElement('a');
+        var url = window.URL.createObjectURL(blob);
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        window.URL.revokeObjectURL(url);
+    }else{
+        navigator.msSaveBlob(blob, fileName)
+    }
 }
