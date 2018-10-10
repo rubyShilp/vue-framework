@@ -18,7 +18,6 @@ module.exports={
             'vue-router':path.resolve(process.cwd(), './node_modules/vue-router/dist/vue-router.min.js'),
             'vuex':path.resolve(process.cwd(), './node_modules/vuex/dist/vuex.min.js'),
             'md5':path.resolve(process.cwd(), './node_modules/md5/md5.js'),
-            'html2canvas':path.resolve(process.cwd(), './node_modules/html2canvas/dist/html2canvas.js'),
             '@':path.resolve(process.cwd(), 'app/scripts')
         },
         extensions: ['.vue','.js','.css']
