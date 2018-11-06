@@ -1,7 +1,7 @@
 {
   "presets": [
-    ["env","stage-2"]
+    ["@babel/preset-env"]
   ],
-  "plugins": ["transform-object-rest-spread","transform-runtime","transform-vue-jsx"],
+  "plugins": ["@babel/plugin-transform-runtime","transform-vue-jsx"],
   "comments": false
 }
