@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import login from './../components/login/login.vue';
+import main from './../components/main/main.vue';
 import {token,sessionOut} from './../util/core';
 Vue.use(VueRouter);
 Vue.config.productionTip = false;
@@ -23,7 +24,8 @@ const scrollBehavior=(to,from,savedPosition)=>{
 // 定义路由
 const loginRouter = [
     {path: '/', redirect: '/login'},
-    {path: '/login',component: login,meta: { scrollToTop: true }}
+    {path: '/login',component: login,meta: { scrollToTop: true }},
+    {path: '/home',component: main,meta: { scrollToTop: true }}
 ];
 const routes=[...loginRouter
              ];
