@@ -3,6 +3,7 @@ const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin=require('mini-css-extract-plugin');
+const autoprefixer=require('autoprefixer');
 module.exports={
     entry:{
         'main': ['babel-polyfill','./scripts/main.js','./scripts/polyfill.js']
@@ -30,7 +31,13 @@ module.exports={
             },
             {
                 test: /\.js$/,
-                use: ['babel-loader'],
+                use:{
+                    loader:'babel-loader?cacheDirectory=true',
+                    options:{
+                        plugins:['@babel/plugin-transform-runtime','@babel/plugin-syntax-dynamic-import','transform-vue-jsx'],
+                        presets:['@babel/preset-env']
+                    }
+                },
                 exclude: /node_modules/
             },
             {
@@ -45,25 +52,44 @@ module.exports={
                 test:/\.less$/,
                 use:[
                     {
-                        loader:MiniCssExtractPlugin.loader,
-                        options:{
-                            publicPath:'../'
-                        }  
+                        loader:MiniCssExtractPlugin.loader
                     },
                     "css-loader",
-                    "less-loader"
+                    
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: [
+                            autoprefixer({
+                                overrideBrowserslist: ["> 1%", "last 2 versions", "not ie <= 8"]
+                            })
+                            ]
+                        }
+                    }, 
+                    {
+                        loader: "less-loader",
+                        options: {
+                          "modifyVars":{},
+                          javascriptEnabled: true,
+                        }
+                    }
                 ]
             },
             {
                 test: /\.css$/,
                 use: [
+                    MiniCssExtractPlugin.loader,
+                  "css-loader",
                   {
-                    loader:MiniCssExtractPlugin.loader,
-                    options:{
-                        publicPath:'../'
-                    }  
-                  },
-                  "css-loader"
+                    loader: 'postcss-loader',
+                    options: {
+                        plugins: [
+                        autoprefixer({
+                            overrideBrowserslist: ["> 1%", "last 2 versions", "not ie <= 8"]
+                        })
+                        ]
+                    }
+                }, 
                 ]
             }
         ]
@@ -71,12 +97,12 @@ module.exports={
     performance: {
         hints: false
     },
-    optimization:{
-        splitChunks:{
-            chunks: "all", 
-        },
-        runtimeChunk:true
-    },
+    // optimization:{
+    //     splitChunks:{
+    //         chunks: "all", 
+    //     },
+    //     runtimeChunk:true
+    // },
     plugins:[
         new VueLoaderPlugin(),
         new webpack.ProgressPlugin(),

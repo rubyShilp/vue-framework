@@ -22,12 +22,15 @@ export default {
     })
   },
   mounted () {
-    
+
   },
   //页面交互
   methods:{
     //登录
     login(){
+      GeeTest('#captcha','float','100%').then(res=>{
+         
+      })
       let params={account:'swaiwai@163.com',password:'qwer1234'};
       this.$store.dispatch('loginModule/login',params).then(res=>{
         if(res.result==='success'){
