@@ -1,14 +1,14 @@
 import axios from 'axios';
 import {token,sessionOut,isJson, urlParams} from './../util/core.js';
-axios.defaults.headers = { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' || 'multipart/form-data','X-Frame-Options':'SAMEORIGIN'};
-axios.defaults.baseURL = '/user/';
+axios.defaults.headers = { 'Content-Type': 'application/json;charset=utf-8;charset=UTF-8' || 'multipart/form-data','X-Frame-Options':'SAMEORIGIN'};
+axios.defaults.baseURL = '/';
 //请求拦截器
 axios.interceptors.request.use(
     (config)=>{
         //根据所传参数的不同判断是否序列化参数
-        if (isJson(config.data)) {
-            config.data = urlParams(config.data);
-        }
+        // if (isJson(config.data)) {
+        //     config.data = urlParams(config.data);
+        // }
         if(token()){
             config.headers.token=token();
         }

@@ -14,7 +14,7 @@ const actions={
   },
   //查询业务模型
   businessQuery:async({},params)=>{
-    let result=await post('/evidence/business-model/list',params);
+    let result=await post('/userCenter/charge/get-product-list',params);
     return result.data;
   },
 };
