@@ -1,14 +1,13 @@
 //判断手机号
 export  function isMobile(val){
-    return /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/.test(val);
-}
+     return /^1\d{10}$/.test(val)
 //判断邮箱
 export  function isEmail(val){
-    return /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(val);
+    return /^[A-Za-z0-9]+([_\.][A-Za-z0-9]+)*@([A-Za-z0-9\-]+\.)+[A-Za-z]{2,6}$/.test(val);
 }
 //判断是否为邮箱或者手机号
 export  function isMobileOrEmail(val){
-    return /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/.test(val)||/^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/.test(val);
+    return isMobile(val) || isEmail(val);
 }
 //数字
 export  function isNumber(val){
